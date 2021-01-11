@@ -8,7 +8,7 @@ import {createFilesRoutes} from './fileManager';
 
 
 const startServer = async () => {
-	const server = new ApolloServer({ typeDefs, resolvers });
+	const server = new ApolloServer({	typeDefs, resolvers	});
 
 	const app = express();
 	createFilesRoutes(app);

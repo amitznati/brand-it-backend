@@ -1,0 +1,31 @@
+{
+  "name": "brand-it-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "watch": "babel src --out-dir dist --presets=@babel/preset-env --watch",
+    "build": "babel src --out-dir dist --presets=@babel/preset-env",
+    "start": "nodemon --exec babel-node dist/index.js",
+    "debug": "nodemon --exec babel-node src/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/cli": "^7.11.6",
+    "@babel/core": "^7.11.6",
+    "@babel/node": "^7.10.5",
+    "@babel/preset-env": "^7.11.5",
+    "nodemon": "^2.0.4"
+  },
+  "dependencies": {
+    "apollo-server-express": "^2.17.0",
+    "express": "^4.17.1",
+    "graphql": "^15.3.0",
+    "mongoose": "^5.10.4",
+    "mongoose-paginate": "^5.0.3",
+    "rimraf": "^3.0.2",
+    "shelljs": "^0.8.4"
+  }
+}
