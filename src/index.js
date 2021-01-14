@@ -20,7 +20,7 @@ const startServer = async () => {
 	if (process.env.NODE_ENV === 'development') {
 		createFilesRoutes(app);
 	}
-	server.applyMiddleware({app});
+	server.applyMiddleware({app, path: '/'});
 
 	await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 

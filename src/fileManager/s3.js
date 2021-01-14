@@ -61,20 +61,24 @@ const isObjectExistS3 = async (params) => {
 
 const deleteObjectS3 = async (params) => (
 	new Promise(async (resolve) => {
-		const isObjectExist = await isObjectExistS3(params);
-		if (isObjectExist) {
-			s3.deleteObject(params,
-				(err, data) => {
-					if (err) {
-						console.log('deleteFromS3 failed: ', err);
-						resolve();
-					} else {
-						console.log('deleteFromS3 data: ', data);
-						resolve();
-					}
-				});
-		} else {
+		if (!params.Key || params.Key.length < 2) {
 			resolve();
+		} else {
+			const isObjectExist = await isObjectExistS3(params);
+			if (isObjectExist) {
+				s3.deleteObject(params,
+					(err, data) => {
+						if (err) {
+							console.log('deleteFromS3 failed: ', err);
+							resolve();
+						} else {
+							console.log('deleteFromS3 data: ', data);
+							resolve();
+						}
+					});
+			} else {
+				resolve();
+			}
 		}
 	})
 );
