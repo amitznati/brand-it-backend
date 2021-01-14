@@ -35,7 +35,6 @@ export const resolvers = {
 			if (ids.length) {
 				payload['_id'] = {$in: ids};
 			}
-			console.log(payload);
 			return Product.find(payload).populate('templates');
 		}
 	},

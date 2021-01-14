@@ -1,5 +1,5 @@
 import UploadedImage from './UploadedImage';
-import {isUploadedImageExist, saveFile} from '../../fileManager';
+import {deleteFile, saveFile} from '../../fileManager';
 import {allModels, allModelsMeta} from '../modelsHelper';
 
 export const resolvers = {
@@ -10,8 +10,6 @@ export const resolvers = {
 	},
 	Mutation: {
 		createUploadedImage: async (_, {name, UploadedImageFile}) => {
-			console.log('data: ', {name, UploadedImageFile});
-			console.log('UploadedImage: ', UploadedImage);
 			const uploadedImage = await UploadedImage.create({name});
 			uploadedImage.url = await saveFile(`images/uploaded-images`, uploadedImage.id, UploadedImageFile);
 			await uploadedImage.save();
@@ -33,6 +31,7 @@ export const resolvers = {
 		deleteUploadedImage: async (_, {id}) => {
 			const uploadedImage = await UploadedImage.findById(id);
 			if (uploadedImage) {
+				await deleteFile(uploadedImage.url);
 				await uploadedImage.delete();
 				return uploadedImage;
 			} else {

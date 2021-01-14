@@ -1,33 +1,27 @@
-import { ApolloServer } from 'apollo-server';
+import { ApolloServer } from 'apollo-server-express';
 import dotenv from 'dotenv'
-// import express from 'express';
+import express from 'express';
 import mongoose from 'mongoose';
 import {typeDefs} from './typeDefs'
 import {resolvers} from './resolvers';
-import path from 'path'
-import {createFilesRoutes} from './fileManager';
+import {createFilesRoutes} from './fileManager/localFileManager';
 
 dotenv.config();
+
 const startServer = async () => {
-	const server = new ApolloServer
-	({
-			typeDefs,
-			resolvers,
-			subscriptions: { path: '/' }
-		});
+	const server = new ApolloServer({typeDefs, resolvers});
 
-	// const uri = 'mongodb+srv://amitznati:Nvrcungahl26@cluster0.smxxf.mongodb.net/test?authSource=admin&replicaSet=Cluster0-shard-0&readPreference=primary&ssl=true';
-	const uri = process.env.DB_URL; //'mongodb://localhost:27017/brand-it';
+	const app = express();
+	if (process.env.NODE_ENV === 'development') {
+		createFilesRoutes(app);
+	}
+	server.applyMiddleware({app});
 
-	await mongoose.connect(uri, {
-		useNewUrlParser: true,
-		useUnifiedTopology: true,
-		serverSelectionTimeoutMS: 5000
-	}).catch(err => console.log(err));
-	server.listen().then(({ url, subscriptionsUrl }) => {
-		console.log(`🚀 Server ready at ${url}`)
-		console.log(`🚀 Susbscription ready at ${subscriptionsUrl}`)
+	await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
+
+	app.listen({port: 4000}, () => {
+		console.log(`� Server ready at http://localhost:4000${server.graphqlPath}`);
 	});
-};
+}
 
 startServer();
