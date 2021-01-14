@@ -24,9 +24,8 @@ const startServer = async () => {
 
 	await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
-	server.listen().then(({ url, subscriptionsUrl }) => {
-		console.log(`🚀 Server ready at ${url}`)
-		console.log(`🚀 Susbscription ready at ${subscriptionsUrl}`)
+	app.listen({port: 4000}, () => {
+		console.log(`� Server ready at http://localhost:4000${server.graphqlPath}`);
 	});
 }
 
