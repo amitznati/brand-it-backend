@@ -1,6 +1,6 @@
-import { ApolloServer } from 'apollo-server-express';
+import { ApolloServer } from 'apollo-server';
 import dotenv from 'dotenv'
-import express from 'express';
+// import express from 'express';
 import mongoose from 'mongoose';
 import {typeDefs} from './typeDefs'
 import {resolvers} from './resolvers';
@@ -16,16 +16,17 @@ const startServer = async () => {
 		subscriptions: { path: '/' }
 	});
 
-	const app = express();
+	// const app = express();
 	if (process.env.NODE_ENV === 'development') {
-		createFilesRoutes(app);
+		// createFilesRoutes(app);
 	}
-	server.applyMiddleware({app, path: '/'});
+	// server.applyMiddleware({app, path: '/'});
 
 	await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
 
-	app.listen({port: 4000}, () => {
-		console.log(`� Server ready at http://localhost:4000${server.graphqlPath}`);
+	server.listen().then(({ url, subscriptionsUrl }) => {
+		console.log(`🚀 Server ready at ${url}`)
+		console.log(`🚀 Susbscription ready at ${subscriptionsUrl}`)
 	});
 }
 
