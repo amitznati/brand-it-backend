@@ -31,6 +31,7 @@
     "mongodb": "^3.6.3",
     "mongoose": "^5.10.4",
     "mongoose-paginate": "^5.0.3",
+    "regenerator-runtime": "^0.13.7",
     "rimraf": "^3.0.2",
     "shelljs": "^0.8.4"
   }
