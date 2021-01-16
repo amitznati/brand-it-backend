@@ -4,7 +4,7 @@ import dotenv from 'dotenv'
 import mongoose from 'mongoose';
 import {typeDefs} from './typeDefs'
 import {resolvers} from './resolvers';
-import {createFilesRoutes} from './fileManager/localFileManager';
+// import {createFilesRoutes} from './fileManager/localFileManager';
 import "regenerator-runtime/runtime.js";
 
 dotenv.config();
@@ -17,9 +17,9 @@ const startServer = async () => {
 	});
 
 	// const app = express();
-	if (process.env.NODE_ENV === 'development') {
-		// createFilesRoutes(app);
-	}
+	// if (process.env.NODE_ENV === 'development') {
+	// 	createFilesRoutes(app);
+	// }
 	// server.applyMiddleware({app, path: '/'});
 
 	await mongoose.connect(process.env.DB_URL, {useNewUrlParser: true, useUnifiedTopology: true});
